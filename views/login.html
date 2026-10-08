@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Second Chapter</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container navbar">
+      <a href="/" class="logo">📚 Second Chapter</a>
+      <ul class="nav-links" id="nav-auth">
+        <!-- Main.js navigation -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="form-card">
+      <h2 style="text-align: center; margin-bottom: 8px; color: var(--primary-color);">Welcome Back</h2>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">Sign in to your Second Chapter student account.</p>
+
+      <div id="login-alert"></div>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Student Email</label>
+          <input type="email" id="email" class="form-control" placeholder="student@university.edu" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign In</button>
+      </form>
+
+      <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">
+        Don't have an account? <a href="/register">Register here</a>
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Second Chapter University Marketplace</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const loginForm = document.getElementById('login-form');
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+          const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+            showAlert('login-alert', 'Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+              if (data.user && data.user.role === 'admin') {
+                window.location.href = '/admin';
+              } else {
+                window.location.href = '/dashboard';
+              }
+            }, 800);
+          } else {
+            showAlert('login-alert', data.message, 'error');
+          }
+        } catch (err) {
+          showAlert('login-alert', 'Connection error: ' + err.message, 'error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

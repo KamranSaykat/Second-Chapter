@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace - Second Chapter</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container navbar">
+      <a href="/" class="logo">📚 Second Chapter</a>
+      <ul class="nav-links" id="nav-auth">
+        <!-- Main.js handles navigation -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div style="margin-bottom: 25px;">
+      <h1>Marketplace</h1>
+      <p style="color: #7f8c8d;">Browse approved textbooks listed by students on campus.</p>
+    </div>
+
+    <!-- Filters Section -->
+    <div class="filter-bar">
+      <form id="filter-form" class="filter-grid">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="search-input">Search</label>
+          <input type="text" id="search-input" class="form-control" placeholder="Title, author, dept...">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="dept-select">Department</label>
+          <select id="dept-select" class="form-control">
+            <option value="">All Departments</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Business">Business</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Biology">Biology</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="semester-select">Semester</label>
+          <select id="semester-select" class="form-control">
+            <option value="">All Semesters</option>
+            <option value="Spring 2026">Spring 2026</option>
+            <option value="Fall 2025">Fall 2025</option>
+            <option value="Summer 2025">Summer 2025</option>
+            <option value="Spring 2025">Spring 2025</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="condition-select">Condition</label>
+          <select id="condition-select" class="form-control">
+            <option value="">All Conditions</option>
+            <option value="New">New</option>
+            <option value="Like New">Like New</option>
+            <option value="Good">Good</option>
+            <option value="Fair">Fair</option>
+            <option value="Poor">Poor</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="min-price">Min Price (৳)</label>
+          <input type="number" id="min-price" class="form-control" placeholder="0" min="0">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label for="max-price">Max Price (৳)</label>
+          <input type="number" id="max-price" class="form-control" placeholder="5000" min="0">
+        </div>
+
+        <div style="display: flex; gap: 8px;">
+          <button type="submit" class="btn btn-primary" style="flex:1;">Filter</button>
+          <button type="button" id="reset-filters" class="btn btn-outline">Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Books Grid -->
+    <div id="books-grid" class="grid">
+      <!-- Loaded dynamically by marketplace.js -->
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Second Chapter University Marketplace</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/marketplace.js"></script>
+</body>
+</html>

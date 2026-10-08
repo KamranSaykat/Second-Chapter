@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Dashboard - Second Chapter</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container navbar">
+      <a href="/" class="logo">📚 Second Chapter</a>
+      <ul class="nav-links" id="nav-auth">
+        <!-- Main.js navigation -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h1>Student Dashboard</h1>
+        <p style="color: #7f8c8d;">Manage your textbook listings, purchase requests, and transactions.</p>
+      </div>
+      <a href="/create-listing" class="btn btn-secondary">+ List New Book</a>
+    </div>
+
+    <!-- Tabs Header -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="tab-listings">My Book Listings</button>
+      <button class="tab-btn" data-tab="tab-incoming">Incoming Sales Requests</button>
+      <button class="tab-btn" data-tab="tab-outgoing">My Purchase Requests</button>
+      <button class="tab-btn" data-tab="tab-transactions">Transaction History</button>
+    </div>
+
+    <!-- Tab 1: My Listings -->
+    <div id="tab-listings" class="tab-content active">
+      <div id="my-listings-container">
+        <p style="padding: 20px;">Loading your listings...</p>
+      </div>
+    </div>
+
+    <!-- Tab 2: Incoming Requests -->
+    <div id="tab-incoming" class="tab-content">
+      <div id="incoming-requests-container">
+        <p style="padding: 20px;">Loading incoming requests...</p>
+      </div>
+    </div>
+
+    <!-- Tab 3: Outgoing Purchase Requests -->
+    <div id="tab-outgoing" class="tab-content">
+      <div id="outgoing-requests-container">
+        <p style="padding: 20px;">Loading purchase requests...</p>
+      </div>
+    </div>
+
+    <!-- Tab 4: Transaction History -->
+    <div id="tab-transactions" class="tab-content">
+      <div id="transactions-container">
+        <p style="padding: 20px;">Loading transaction history...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Second Chapter University Marketplace</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/dashboard.js"></script>
+  <script>
+    // Ensure auth check
+    fetch('/api/auth/me').then(r => r.json()).then(data => {
+      if (!data.loggedIn) {
+        window.location.href = '/login';
+      }
+    });
+  </script>
+</body>
+</html>

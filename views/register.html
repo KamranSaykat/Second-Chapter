@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Second Chapter</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container navbar">
+      <a href="/" class="logo">📚 Second Chapter</a>
+      <ul class="nav-links" id="nav-auth">
+        <!-- Main.js navigation -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="form-card">
+      <h2 style="text-align: center; margin-bottom: 8px; color: var(--primary-color);">Create Student Account</h2>
+      <p style="text-align: center; color: var(--text-muted); margin-bottom: 25px;">Join your campus textbook community.</p>
+
+      <div id="register-alert"></div>
+
+      <form id="register-form">
+        <div class="form-group">
+          <label for="full_name">Full Name</label>
+          <input type="text" id="full_name" class="form-control" placeholder="John Doe" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Student Email</label>
+          <input type="email" id="email" class="form-control" placeholder="student@university.edu" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" class="form-control" placeholder="At least 6 characters" required>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" id="confirm_password" class="form-control" placeholder="Confirm password" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Register Account</button>
+      </form>
+
+      <p style="text-align: center; margin-top: 20px; font-size: 0.9rem; color: var(--text-muted);">
+        Already have an account? <a href="/login">Sign in here</a>
+      </p>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Second Chapter University Marketplace</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('register-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const full_name = document.getElementById('full_name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirm_password = document.getElementById('confirm_password').value;
+
+        if (password !== confirm_password) {
+          showAlert('register-alert', 'Passwords do not match.', 'error');
+          return;
+        }
+
+        try {
+          const res = await fetch('/api/auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ full_name, email, password })
+          });
+
+          const data = await res.json();
+
+          if (data.success) {
+            showAlert('register-alert', 'Account registered successfully! Redirecting to dashboard...', 'success');
+            setTimeout(() => {
+              window.location.href = '/dashboard';
+            }, 1000);
+          } else {
+            showAlert('register-alert', data.message, 'error');
+          }
+        } catch (err) {
+          showAlert('register-alert', 'Error during registration: ' + err.message, 'error');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

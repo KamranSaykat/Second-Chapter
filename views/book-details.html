@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Details - Second Chapter</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container navbar">
+      <a href="/" class="logo">📚 Second Chapter</a>
+      <ul class="nav-links" id="nav-auth">
+        <!-- Main.js navigation -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div style="margin-bottom: 20px;">
+      <a href="/marketplace" style="font-weight: 600;">&larr; Back to Marketplace</a>
+    </div>
+
+    <div id="alert-box"></div>
+
+    <div id="book-details-container">
+      <div style="text-align: center; padding: 50px;">Loading book details...</div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Second Chapter University Marketplace</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const bookId = urlParams.get('id');
+
+      if (!bookId) {
+        document.getElementById('book-details-container').innerHTML = '<div class="alert alert-error">No book specified.</div>';
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/books/${bookId}`);
+        const data = await res.json();
+
+        if (!data.success || !data.book) {
+          document.getElementById('book-details-container').innerHTML = `<div class="alert alert-error">${escapeHtml(data.message || 'Book not found.')}</div>`;
+          return;
+        }
+
+        const book = data.book;
+        const container = document.getElementById('book-details-container');
+
+        const isSold = book.status === 'sold';
+
+        container.innerHTML = `
+          <div class="book-details-layout">
+            <div class="details-image">
+              <img src="${escapeHtml(book.photo_url)}" alt="${escapeHtml(book.title)}" onerror="this.src='/uploads/default-book.svg'">
+            </div>
+            <div class="details-info">
+              <h1>${escapeHtml(book.title)}</h1>
+              <div class="author">By ${escapeHtml(book.author)}</div>
+              <div style="margin-bottom: 15px;">
+                <span class="badge badge-${escapeHtml(book.status)}">${escapeHtml(book.status)}</span>
+              </div>
+
+              <div class="price" style="font-size: 2rem; margin-bottom: 20px;">${formatBDT(book.price)}</div>
+
+              <div class="details-meta-grid">
+                <div class="meta-item">
+                  <label>Department</label>
+                  <span>${escapeHtml(book.department)}</span>
+                </div>
+                <div class="meta-item">
+                  <label>Semester</label>
+                  <span>${escapeHtml(book.semester)}</span>
+                </div>
+                <div class="meta-item">
+                  <label>Edition</label>
+                  <span>${escapeHtml(book.edition)}</span>
+                </div>
+                <div class="meta-item">
+                  <label>Condition</label>
+                  <span>${escapeHtml(book.condition)}</span>
+                </div>
+              </div>
+
+              <div style="background: #edf2f7; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+                <label style="display:block; font-size:0.8rem; color:#7f8c8d; text-transform:uppercase; font-weight:700;">Seller Info</label>
+                <div style="font-weight:700; font-size:1.1rem; margin-top:3px;">${escapeHtml(book.seller_name)}</div>
+                <div style="color:#7f8c8d; font-size:0.9rem;">${escapeHtml(book.seller_email)}</div>
+              </div>
+
+              ${isSold ? `
+                <div class="alert alert-error" style="text-align: center;">This textbook has been SOLD and is no longer available.</div>
+              ` : `
+                <button id="request-btn" onclick="sendPurchaseRequest(${book.id})" class="btn btn-secondary" style="width: 100%; font-size: 1.1rem; padding: 14px;">
+                  Send Purchase Request
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+      } catch (err) {
+        document.getElementById('book-details-container').innerHTML = `<div class="alert alert-error">Error loading details: ${err.message}</div>`;
+      }
+    });
+
+    async function sendPurchaseRequest(bookId) {
+      if (!currentUser) {
+        alert('Please log in to send a purchase request.');
+        window.location.href = `/login?redirect=/book-details?id=${bookId}`;
+        return;
+      }
+
+      const requestBtn = document.getElementById('request-btn');
+      if (requestBtn) requestBtn.disabled = true;
+
+      try {
+        const res = await fetch('/api/requests', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ book_id: bookId })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          showAlert('alert-box', data.message, 'success');
+        } else {
+          showAlert('alert-box', data.message, 'error');
+          if (requestBtn) requestBtn.disabled = false;
+        }
+      } catch (err) {
+        showAlert('alert-box', 'Failed to send request: ' + err.message, 'error');
+        if (requestBtn) requestBtn.disabled = false;
+      }
+    }
+  </script>
+</body>
+</html>

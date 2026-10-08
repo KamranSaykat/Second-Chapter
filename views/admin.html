@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal - Second Chapter</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="container navbar">
+      <a href="/" class="logo">📚 Second Chapter <span style="font-size:0.8rem; background:#2b5797; color:white; padding:2px 8px; border-radius:10px;">ADMIN</span></a>
+      <ul class="nav-links" id="nav-auth">
+        <!-- Main.js navigation -->
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div style="margin-bottom: 25px;">
+      <h1>Admin Dashboard & Verification Portal</h1>
+      <p style="color: #7f8c8d;">Review pending textbook listings, inspect condition photos, manage users, and inspect campus transactions.</p>
+    </div>
+
+    <!-- Admin Tabs -->
+    <div class="tabs">
+      <button class="admin-tab-btn active" data-tab="admin-tab-pending">Pending Listings Verification</button>
+      <button class="admin-tab-btn" data-tab="admin-tab-users">User Directory</button>
+      <button class="admin-tab-btn" data-tab="admin-tab-tx">System Transactions & Revenue</button>
+    </div>
+
+    <!-- Tab 1: Pending Listings -->
+    <div id="admin-tab-pending" class="admin-tab-content active">
+      <h3 style="margin-bottom: 15px;">Pending Listings Awaiting Photo Inspection</h3>
+      <div id="admin-pending-container">
+        <p style="padding: 20px;">Loading pending listings...</p>
+      </div>
+    </div>
+
+    <!-- Tab 2: User Directory -->
+    <div id="admin-tab-users" class="admin-tab-content">
+      <h3 style="margin-bottom: 15px;">Registered Campus Users</h3>
+      <div id="admin-users-container">
+        <p style="padding: 20px;">Loading users...</p>
+      </div>
+    </div>
+
+    <!-- Tab 3: System Transactions -->
+    <div id="admin-tab-tx" class="admin-tab-content">
+      <h3 style="margin-bottom: 15px;">Transaction Logs & 5% Platform Revenue</h3>
+      <div id="admin-tx-container">
+        <p style="padding: 20px;">Loading system transactions...</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Second Chapter Admin Portal</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script src="/js/admin.js"></script>
+  <script>
+    // Ensure admin authorization check on page load
+    fetch('/api/auth/me').then(r => r.json()).then(data => {
+      if (!data.loggedIn || data.user.role !== 'admin') {
+        alert('Access denied. Admin authorization required.');
+        window.location.href = '/login';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{
+  "name": "second-chapter",
+  "version": "1.0.0",
+  "description": "Second Chapter - Web-based campus used textbook marketplace for university students",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node scratch/test-suite.js",
+    "seed": "node scripts/seed.js"
+  },
+  "keywords": [
+    "marketplace",
+    "textbook",
+    "university",
+    "express",
+    "sqlite"
+  ],
+  "author": "Second Chapter Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "express": "^4.21.2",
+    "express-session": "^1.18.2",
+    "multer": "^1.4.5-lts.1",
+    "sqlite3": "^5.1.7"
+  }
+}
