@@ -91,11 +91,7 @@ http://localhost:3000
 ## Project Structure
 
 ```
-Second Chapter/
-├── .agents/
-│   └── skills/
-│       └── second-chapter/
-│           └── SKILL.md      # Project specification & guidelines
+
 ├── public/
 │   ├── css/
 │   │   └── style.css         # Clean university marketplace styling
