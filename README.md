@@ -225,19 +225,8 @@ npm test
 - **Database reset / re-seeding:**
   Run `npm run seed` to re-populate fresh BDT demo data at any time.
 
----
 
-## University Demo Guide (Live Instructor Presentation in BDT ৳)
 
-Follow these 10 simple steps to demonstrate the complete project in under 3 minutes during a viva or presentation:
 
-1. **Start Server:** Run `npm start` and navigate to `http://localhost:3000`.
-2. **Seed Sample BDT Data:** Run `npm run seed` to load demo textbooks in BDT.
-3. **Login as Student (Alice):** Login with `alice@secondchapter.edu` / `student123`.
-4. **Create Listing:** Click **+ Sell Book**, enter title, department, set price as `৳1800`, attach a photo, and submit (Show that status is `pending`).
-5. **Demonstrate Public Marketplace Protection:** Go to `/marketplace` and show that the newly submitted book is **not** visible yet.
-6. **Admin Verification:** Log out and sign in as Admin (`admin@secondchapter.edu` / `admin123`). Navigate to `/admin`, inspect the pending listing photo, and click **Approve**.
-7. **Marketplace Search & Filter:** Log out, sign in as Charlie (`charlie@secondchapter.edu` / `student123`), go to `/marketplace`, search for the textbook, and demonstrate the BDT price range and department filters.
-8. **Send Purchase Request:** Open book details and click **Send Purchase Request**. (Attempting a duplicate request will show the protection message).
-9. **Seller Accept & Transaction:** Log out, sign in as Alice, open `/dashboard` ➔ **Incoming Sales Requests**, and click **Accept**.
-10. **Show 5% Platform Commission in BDT (৳):** View **Transaction History** in Alice's dashboard and the Admin portal (`/admin`) to highlight the automated 5% platform commission calculation (৳1,800 sale ➔ ৳90 commission, ৳1,710 seller payout) and verified sold-book status.
+
+
